@@ -27,13 +27,28 @@ var tail = function() {
                     }
                 });
 
-                if (result.body[last].status === 'finished' || result.body[last].status === 'error') {
+                if (result.body[last].status === 'finished') {
                     clearInterval(interval);
+                    process.exit(0);
                 }
-            } else {
-                console.log('Line ' + result.body.line + ':' + result.body.message);
-                if (result.body.status === 'finished' || result.body.status === 'error') {
+
+                if (result.body[last].status === 'error') {
                     clearInterval(interval);
+                    process.exit(1);
+                }
+
+            } else {
+
+                console.log('Line ' + result.body.line + ':' + result.body.message);
+
+                if (result.body.status === 'finished') {
+                    clearInterval(interval);
+                    process.exit(0);
+                }
+
+                 if (result.body.status === 'error') {
+                    clearInterval(interval);
+                    process.exit(1);
                 }
             }
         }
@@ -46,6 +61,8 @@ unirest.get('http://' + ip +':3000/hourly-comscore/start')
     if (result.status === 200) {
         id = result.body.id;
         interval = setInterval(tail, 2000);
+    } else {
+        process.exit(1);
     }
 });
 
