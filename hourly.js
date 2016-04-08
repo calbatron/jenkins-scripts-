@@ -1,13 +1,17 @@
 'use strict';
 
 var unirest = require('unirest');
-var ip = '10.38.164.61';
+var ip = '10.38.172.251';
 var id = 0;
 var index = 0;
 var interval = null;
 var line = 0;
 
 var tail = function() {
+
+    var error = 0;
+    var finished = 0;
+
     unirest.get('http://' + ip + ':3000/hourly-comscore/tail/' + id + '/' + index)
     .end(function(result) {
         if (result.status === 200) {
@@ -21,19 +25,30 @@ var tail = function() {
 
             if (Array.isArray(result.body)) {
                 result.body.forEach(function(row){
+
+                    if (row.status === 'finished') {
+                        finished++;
+                    }
+
+                    if (row.status === 'error') {
+                        error++;
+                    }
+
                     if (line !== row.line) {
                         console.log('Line ' + row.line + ': ' + row.message);
                         line = row.line;
                     }
                 });
 
-                if (result.body[last].status === 'finished') {
+                if (error > 0) {
                     clearInterval(interval);
+                    console.log('exit with 0');
                     process.exit(0);
                 }
 
-                if (result.body[last].status === 'error') {
+                if (finished > 0) {
                     clearInterval(interval);
+                    console.log('exit with 1');
                     process.exit(1);
                 }
 
@@ -43,11 +58,13 @@ var tail = function() {
 
                 if (result.body.status === 'finished') {
                     clearInterval(interval);
+                    console.log('exit with 0');
                     process.exit(0);
                 }
 
                  if (result.body.status === 'error') {
                     clearInterval(interval);
+                    console.log('exit with 1');
                     process.exit(1);
                 }
             }
@@ -62,6 +79,7 @@ unirest.get('http://' + ip +':3000/hourly-comscore/start')
         id = result.body.id;
         interval = setInterval(tail, 2000);
     } else {
+        console.log('exit with 1');
         process.exit(1);
     }
 });
