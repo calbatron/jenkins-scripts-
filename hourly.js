@@ -27,10 +27,12 @@ var tail = function() {
                 result.body.forEach(function(row){
 
                     if (row.status === 'finished') {
+                        console.log('finsihed:', row);
                         finished++;
                     }
 
                     if (row.status === 'error') {
+                        console.log('error:', row);
                         error++;
                     }
 
