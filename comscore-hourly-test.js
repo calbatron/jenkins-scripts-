@@ -86,6 +86,7 @@ unirest.get('http://' + ip +':3000/hourly-comscore/start')
         id = result.body.id;
         interval = setInterval(tail, 2000);
     } else {
+        console.log(result);
         console.log('exit with 1');
         process.exit(1);
     }
