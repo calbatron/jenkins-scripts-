@@ -1,7 +1,9 @@
 'use strict';
 
+//test
+
 var unirest = require('unirest');
-var ip = '10.38.154.234';
+var ip = '10.38.165.22';
 var id = 0;
 var index = 0;
 var interval = null;
@@ -47,13 +49,13 @@ var tail = function() {
 
                 if (error > 0) {
                     clearInterval(interval);
-                    console.log('exit with 0');
+                    console.log('exit with 1');
                     process.exit(1);
                 }
 
                 if (finished > 0) {
                     clearInterval(interval);
-                    console.log('exit with 1');
+                    console.log('exit with 0');
                     process.exit(0);
                 }
 
