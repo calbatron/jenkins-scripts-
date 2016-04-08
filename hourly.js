@@ -26,8 +26,13 @@ var tail = function() {
             if (Array.isArray(result.body)) {
                 result.body.forEach(function(row){
 
+
+                    if (line !== row.line) {
+                        console.log('Line ' + row.line + ': ' + row.message);
+                        line = row.line;
+                    }
+
                     if (row.status === 'finished') {
-                        console.log('finsihed:', row);
                         finished++;
                     }
 
@@ -36,22 +41,20 @@ var tail = function() {
                         error++;
                     }
 
-                    if (line !== row.line) {
-                        console.log('Line ' + row.line + ': ' + row.message);
-                        line = row.line;
-                    }
+
+
                 });
 
                 if (error > 0) {
                     clearInterval(interval);
                     console.log('exit with 0');
-                    process.exit(0);
+                    process.exit(1);
                 }
 
                 if (finished > 0) {
                     clearInterval(interval);
                     console.log('exit with 1');
-                    process.exit(1);
+                    process.exit(0);
                 }
 
             } else {
