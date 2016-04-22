@@ -3,7 +3,8 @@
 //test
 
 var unirest = require('unirest');
-var ip = '10.38.163.40';
+//ip of clockwork server
+var ip = '10.38.153.178';
 var id = 0;
 var index = 0;
 var interval = null;
