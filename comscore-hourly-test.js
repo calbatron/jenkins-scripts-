@@ -4,7 +4,7 @@
 
 var unirest = require('unirest');
 //ip of clockwork server
-var ip = '10.38.158.68';
+var ip = 'test-cloc-Componen-1UK7FGIIKO9T5-411183198.eu-west-1.elb.amazonaws.com';
 var id = 0;
 var index = 0;
 var interval = null;
