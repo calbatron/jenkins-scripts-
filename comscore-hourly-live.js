@@ -4,7 +4,7 @@
 
 var unirest = require('unirest');
 //ip of clockwork
-var ip = '10.38.156.86';
+var ip = 'internal-live-cloc-Componen-A0S56IYQFT5B-1619225976.eu-west-1.elb.amazonaws.com';
 var id = 0;
 var index = 0;
 var interval = null;
