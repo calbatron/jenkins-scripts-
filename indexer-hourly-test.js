@@ -15,6 +15,8 @@ var tail = function() {
     var error = 0;
     var finished = 0;
 
+    console.log('http://' + ip + ':3000/indexed/tail/' + id + '/' + index);
+
     unirest.get('http://' + ip + ':3000/indexed/tail/' + id + '/' + index)
     .end(function(result) {
         if (result.status === 200) {
@@ -84,6 +86,7 @@ var tail = function() {
 unirest.get('http://' + ip +':3000/indexed/start')
 .end(function(result) {
     if (result.status === 200) {
+        console.log(result.body);
         id = result.body.id;
         interval = setInterval(tail, 2000);
     } else {
