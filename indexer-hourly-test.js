@@ -86,7 +86,7 @@ var tail = function() {
 unirest.get('http://' + ip +':3000/indexed/start')
 .end(function(result) {
     if (result.status === 200) {
-        console.log(result);
+        console.log(result.raw_body);
         id = result.body.id;
         interval = setInterval(tail, 2000);
     } else {
